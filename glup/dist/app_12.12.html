@@ -1,0 +1,82 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="user-scalable=0，width=device-width，height=device-height,initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="format-detection" content="email=no"><meta property="og:type" content="website"><meta property="og:title" content="欢乐抓娃娃"><!--<meta property="og:description" content="免费手机抓娃娃，全国包邮，输入我的邀请码%s，登录就送娃娃币！">--><meta property="og:image" content="https://images.qn.rgbvr.com/misc/1502894024145image_20170816223344"><meta itemprop="name" content="欢乐抓娃娃"><link rel="stylesheet" type="text/css" href="css/app_12.12.css"><title>我要娃娃</title></head><body><div class="main"><div class="recharge tp"><h3>戳这里，快去得币</h3></div><div class="invite tp"><h3>戳这里，有请神助攻</h3></div><div class="score tp"><h3>戳这里，快去抓娃娃</h3></div><div class="share tp"><h3>赶紧去抓娃娃</h3></div><div class="read tp"><h3>戳这里，快让大神带我超神</h3></div><div class="bg"><img src="images/raiders11.28.jpg" alt="我要娃娃"></div></div><script src="./js/newrem.js"></script><script src="https://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script><script>$(function () {
+        var phoneType = '';
+        var u = navigator.userAgent;//获取浏览器信息
+         if (u.indexOf('Android') > -1) {//安卓手机
+            phoneType = 'android';
+        } else if(u.indexOf('Linux') > -1){//安卓手机
+            phoneType = 'android';
+        }else if(u.indexOf('iPhone') > -1){//苹果手机
+            phoneType = 'iphone'
+        }
+        //点击跳转
+        if(phoneType == 'android'){
+            $(".main .tp").show();
+            $(".recharge").click(function () {
+                if(typeof (dsBridge)!=="undefined"){
+                    callPay();
+                }else{
+                    console.log("APP外")
+                }
+
+
+            })
+            $(".invite").click(function () {
+                if(typeof (dsBridge)!=="undefined"){
+                    callInvite();
+                }else{
+                    console.log("APP外")
+                }
+
+
+            })
+            $(".score").click(function () {
+                if(typeof (dsBridge)!=="undefined"){
+                    callHome();
+                }else{
+                    console.log("APP外")
+                }
+
+
+            })
+            $(".share").click(function () {
+                if(typeof (dsBridge)!=="undefined"){
+                    callHome();
+                }else{
+                    console.log("APP外")
+                }
+
+
+            })
+            $(".read").click(function () {
+                if(typeof (dsBridge)!=="undefined"){
+                    callWeb('https://wawa.rgbvr.com/activity/happy_wawa_strategy.html', '大神攻略');
+                }else{
+                    console.log("APP外")
+                }
+
+            })
+
+        }else if(phoneType == 'iphone'){
+            $(".main .tp").hide()
+        }
+
+
+
+
+        function callPay() {
+            dsBridge.call("callPage", {page:"com.rgbvr.wawa.activities.pay.NewPayActivity"})
+        }
+
+        function callInvite() {
+            dsBridge.call("callPage", {page:"com.rgbvr.wawa.activities.MyInvitationCodeActivity"})
+        }
+
+        function callHome() {
+            dsBridge.call("callPage", {page:"com.rgbvr.wawa.activities.pay.HomeActivity"})
+
+        }
+
+        function callWeb(urlPage, title) {
+            dsBridge.call("callWeb", {url:urlPage, token:false, random:true, title:title});
+        }
+    })</script></body></html>

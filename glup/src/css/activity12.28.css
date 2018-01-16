@@ -1,0 +1,30 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+html {
+  -webkit-text-size-adjust: 100%;
+  font-size: 62.5%;
+}
+html body {
+  width: 100%;
+  height: 100%;
+}
+#bg {
+  position: relative;
+}
+#bg .footerBtn {
+  position: absolute;
+  left: 3.648rem;
+  bottom: 1.06666667rem;
+}
+#bg .footerBtn .download {
+  width: 8.34133333rem;
+  height: 2.51733333rem;
+  background: url("../images/download_before.png") no-repeat;
+  background-size: 100% 100%;
+}
+#bg img {
+  width: 100%;
+  height: 100%;
+}

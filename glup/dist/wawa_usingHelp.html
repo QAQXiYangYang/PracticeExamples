@@ -1,0 +1,50 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="user-scalable=0"><meta name="format-detection" content="telephone=no"><meta name="format-detection" content="email=no"><title>抓娃娃使用帮助</title><style>body{
+            padding: 0 0.2rem 0.5rem 0.2rem;
+            background-color: #fef7f3;
+        }
+        h3{
+            font-size: 0.3rem;
+        }
+        p{
+            font-size: 0.3rem;
+            text-indent: 0.8rem;
+
+        }
+        div{
+            text-align: center;
+        }
+        div img{
+            width: 6rem;
+            height: auto;
+            border: 1px solid lightgray;
+        }
+        div span{
+            display: block;
+            font-size: 0.2rem;
+            margin-top: -0.2rem;
+        }
+        .red{
+            color: red;
+        }
+        .teshu{
+            color: red;
+            font-size: 0.4rem;
+
+        }</style></head><body><h3>1、如何抓娃娃？</h3><p>进入“欢乐抓娃娃”首页，选择娃娃房间，如图1:</p><div><img src="images/usingHelp1.png" alt="房间列表图"> <span>图1</span></div><p>房间共有三种状态：空闲中、正在使用中、维护中。</p><p>选择进入状态为<span class="red">“空闲中”</span>的房间，如图2：</p><div><img src="images/usingHelp2.png" alt="开始抓娃娃按钮"> <span>图2</span></div><p>点击“开始抓娃娃”按键，进入抓娃娃状态，如图3:</p><div><img src="images/usingHelp3.png" alt="抓娃娃界面"> <span>图3</span></div><p>画面下方位置：用四个方向键控制天车移动方向，GO键来控制下爪；</p><p>画面右中位置：“眼睛”按键可以切换观看视角，方便选中目标娃娃；</p><p>画面右下角位置：“30S”倒计时，每次抓取时间最长30S，倒计时结束将自动下爪。</p><p>选择进入状态为：<span class="red">“正在使用中”</span>的房间，如图4：</p><div><img src="images/usingHelp4.png" alt="预约房间按钮"> <span>图4</span></div><p>其她用户正在使用中，您可进行观看其她用户抓取过程，可以通过聊天选项进行鼓励和吐槽。</p><p>通过预约功能，可预约抓取该房间娃娃。一个帐号同时只能预约一个房间，若用户再次预约其它房间，则上次预约自动取消。</p><p>用户也可主动取消预约，如图5：</p><div><img src="images/usingHelp5.png" alt="取消预约按钮"> <span>图5</span></div><h3>2、如何充值娃娃币？</h3><p>进入“我的”页面，如图6:</p><div><img src="images/usingHelp6.png" alt="取消预约按钮"> <span>图6</span></div><p>点击“我的娃娃币”，进入充值页面，可通过微信、支付宝进行充值。也可在娃娃房间内选择“+去充币”进入充值页面，进行充值。</p><h3>3、如何免费获得娃娃币？</h3><p>每天登录就送10娃娃币。</p><p class="teshu">快喊上小伙伴一起来抓娃娃吧！</p><script>//动态加载rem
+    (function (doc, win) {
+        var docEl = doc.documentElement,
+            resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+            recalc = function () {
+                var clientWidth = docEl.clientWidth;
+                if (!clientWidth) return;
+                if(clientWidth>=640){
+                    docEl.style.fontSize = '100px';
+                }else{
+                    docEl.style.fontSize = 100 * (clientWidth / 640) + 'px';
+                }
+            };
+
+        if (!doc.addEventListener) return;
+        win.addEventListener(resizeEvt, recalc, false);
+        doc.addEventListener('DOMContentLoaded', recalc, false);
+    })(document, window);</script></body></html>

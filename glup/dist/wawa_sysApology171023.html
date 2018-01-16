@@ -1,0 +1,308 @@
+<!DOCTYPE html><html lang="zh"><head><meta charset="UTF-8"><meta content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width" name="viewport"><meta content="telephone=no" name="format-detection"><meta name="format-detection" content="email=no"><title>欢乐抓娃娃维护公告</title><script>; (function (win, lib) {
+
+            var doc = win.document;
+
+            var docEl = doc.documentElement;
+
+            var metaEl = doc.querySelector('meta[name="viewport"]');
+
+            var flexibleEl = doc.querySelector('meta[name="flexible"]');
+
+            var dpr = 0;
+
+            var scale = 0;
+
+            var tid;
+
+            var flexible = lib.flexible || (lib.flexible = {});
+
+
+
+            if (metaEl) {
+
+                console.warn('将根据已有的meta标签来设置缩放比例');
+
+                var match = metaEl.getAttribute('content').match(/initial\-scale=([\d\.]+)/);
+
+                if (match) {
+
+                    scale = parseFloat(match[1]);
+
+                    dpr = parseInt(1 / scale);
+
+                }
+
+            } else if (flexibleEl) {
+
+                var content = flexibleEl.getAttribute('content');
+
+                if (content) {
+
+                    var initialDpr = content.match(/initial\-dpr=([\d\.]+)/);
+
+                    var maximumDpr = content.match(/maximum\-dpr=([\d\.]+)/);
+
+                    if (initialDpr) {
+
+                        dpr = parseFloat(initialDpr[1]);
+
+                        scale = parseFloat((1 / dpr).toFixed(2));
+
+                    }
+
+                    if (maximumDpr) {
+
+                        dpr = parseFloat(maximumDpr[1]);
+
+                        scale = parseFloat((1 / dpr).toFixed(2));
+
+                    }
+
+                }
+
+            }
+
+
+
+            if (!dpr && !scale) {
+
+                var isAndroid = win.navigator.appVersion.match(/android/gi);
+
+                var isIPhone = win.navigator.appVersion.match(/iphone/gi);
+
+                var devicePixelRatio = win.devicePixelRatio;
+
+                if (isIPhone) {
+
+                    // iOS下，对于2倍和3倍的屏幕，用2倍的方案，其余的用1倍方案
+
+                    if (devicePixelRatio >= 3 && (!dpr || dpr >= 3)) {
+
+                        dpr = 3;
+
+                    } else if (devicePixelRatio >= 2 && (!dpr || dpr >= 2)) {
+
+                        dpr = 2;
+
+                    } else {
+
+                        dpr = 1;
+
+                    }
+
+                } else {
+
+                    //其它设备下，仍使用1倍的方案
+
+                    dpr = 1;
+
+                }
+
+                scale = 1 / dpr;
+
+            }
+
+
+
+            docEl.setAttribute('data-dpr', dpr);
+
+            if (!metaEl) {
+
+                metaEl = doc.createElement('meta');
+
+                metaEl.setAttribute('name', 'viewport');
+
+                metaEl.setAttribute('content', 'initial-scale=' + scale + ', maximum-scale=' + scale + ', minimum-scale=' + scale + ', user-scalable=0');
+
+                if (docEl.firstElementChild) {
+
+                    docEl.firstElementChild.appendChild(metaEl);
+
+                } else {
+
+                    var wrap = doc.createElement('div');
+
+                    wrap.appendChild(metaEl);
+
+                    doc.write(wrap.innerHTML);
+
+                }
+
+            }
+
+
+
+            function refreshRem() {
+
+                var width = docEl.getBoundingClientRect().width;
+
+                /*if (width / dpr > 540) {
+
+                 width = 540 * dpr;
+
+                 }*/
+
+                //淘宝方式1rem代表设计稿的十分之一
+                // var rem = width / 10;
+
+                // // 另一种方式，1rem改成设计稿上的100px，设计稿为750
+                var designWidth = 750;
+                var rem = width / designWidth * 100;
+
+                docEl.style.fontSize = rem + 'px';
+
+                flexible.rem = win.rem = rem;
+
+            }
+
+
+
+            win.addEventListener('resize', function () {
+
+                clearTimeout(tid);
+
+                tid = setTimeout(refreshRem, 300);
+
+            }, false);
+
+            win.addEventListener('pageshow', function (e) {
+
+                if (e.persisted) {
+
+                    clearTimeout(tid);
+
+                    tid = setTimeout(refreshRem, 300);
+
+                }
+
+            }, false);
+
+
+
+            if (doc.readyState === 'complete') {
+
+                doc.body.style.fontSize = 12 * dpr + 'px';
+
+            } else {
+
+                doc.addEventListener('DOMContentLoaded', function (e) {
+
+                    doc.body.style.fontSize = 12 * dpr + 'px';
+
+                }, false);
+
+            }
+
+
+
+
+
+            refreshRem();
+
+
+
+            flexible.dpr = win.dpr = dpr;
+
+            flexible.refreshRem = refreshRem;
+
+            flexible.rem2px = function (d) {
+
+                var val = parseFloat(d) * this.rem;
+
+                if (typeof d === 'string' && d.match(/rem$/)) {
+
+                    val += 'px';
+
+                }
+
+                return val;
+
+            }
+
+            flexible.px2rem = function (d) {
+
+                var val = parseFloat(d) / this.rem;
+
+                if (typeof d === 'string' && d.match(/px$/)) {
+
+                    val += 'rem';
+
+                }
+
+                return val;
+
+            }
+
+
+
+        })(window, window['lib'] || (window['lib'] = {}));</script><style>*{
+            margin:0;
+            padding:0;
+        }
+        html, body {
+            height: auto;
+            width: 100%;
+            background-color: #FE7777;
+        }
+        header{
+            width: 100%;
+            height: 1.79rem;
+            position: relative;
+        }
+        header img{
+            width: 1.98rem;
+            height: 1.52rem;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
+        }
+
+        .container{
+            width: 7.26rem;
+            height: 11.36rem;
+            background-color: white;
+            margin: 0 auto 0.2rem;
+            border-radius: 0.1rem;
+            padding: 0 0.21rem;
+            box-sizing: border-box;
+        }
+        .container h2{
+            display: block;
+            width:100%;
+            height:1.8rem;
+            font-size:0.48rem;
+            font-family:NotoSansHans-Bold;
+            color:rgba(34,34,34,1);
+            line-height:1.8rem;
+            text-align: center;
+        }
+        .container p{
+            font-size: 0.28rem;
+            font-family:NotoSansHans-Regular;
+            color:rgba(79,79,79,1);
+            line-height:0.5rem;
+        }
+        .import{
+            width: 100%;
+            height: auto;
+            margin: 0.57rem 0;
+        }
+        h3{
+            font-family:NotoSansHans-Bold;
+            font-size: 0.28rem;
+            color: #2d2d2d;
+            line-height: 0.5rem;
+        }
+
+        .footer{
+            width: 100%;
+            height: auto;
+            margin: 1.08rem 0 0;
+            text-align: center;
+        }
+        .footer img{
+            width: 1.3rem;
+            height: 1.3rem;
+        }</style></head><body><header><img src="images/FAQ_headImg.png" alt="欢乐抓娃娃"></header><div class="container"><h2>维护补偿</h2><p>亲爱的欢乐抓娃娃玩家:</p><p style="text-indent: 2em;">从10月21日21点到10月22日24点，因服务器网络异常原因，对大家正常的游戏体验造成影响，对此我们深表歉意，官方将为在出现此次问题期间登陆的玩家奉上50娃娃币的补偿。</p><p style="text-indent: 2em;">本次网络异常期间引起的其他问题请您联系客服，我们会为您解决，感谢各位玩家的支持与理解！</p><p style="text-align: right">欢乐抓娃娃团队</p></div></body></html>

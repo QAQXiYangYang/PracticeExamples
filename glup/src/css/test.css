@@ -1,0 +1,24 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+html {
+  -webkit-text-size-adjust: 100%;
+  font-size: 62.5%;
+}
+html body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+img {
+  width: 100%;
+  height: 100%;
+}
+#vide {
+  width: 7.44533333rem;
+  height: 13.22666667rem;
+  position: absolute;
+  top: 11.072rem;
+  left: 4.18133333rem;
+}

@@ -1,0 +1,39 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+html {
+  -webkit-text-size-adjust: 100%;
+  font-size: 62.5%;
+}
+html body {
+  width: 100%;
+  height: 100%;
+}
+#bg {
+  position: relative;
+}
+#bg .downloadBtn {
+  display: flex;
+  position: absolute;
+  width: 100%;
+  height: 6.4rem;
+  justify-content: center;
+  top: 18.13333333rem;
+}
+#bg .downloadBtn #andr-download {
+  width: 6.4rem;
+  height: 6.4rem;
+  background: url("../images/anup.png") no-repeat;
+  background-size: 100% 100%;
+}
+#bg .downloadBtn #ios-download {
+  width: 6.4rem;
+  height: 6.4rem;
+  background: url("../images/iosup.png") no-repeat;
+  background-size: 100% 100%;
+}
+#bg img {
+  width: 100%;
+  height: 100%;
+}

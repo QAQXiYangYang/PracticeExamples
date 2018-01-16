@@ -1,0 +1,131 @@
+<!DOCTYPE html><html><html lang="zh"><head><meta charset="UTF-8"><meta name="viewport" content="user-scalable=0，width=device-width，height=device-height,initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="format-detection" content="email=no"><title>欢乐抓娃娃官方公告</title><style>* {
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            -webkit-text-size-adjust: 100%;
+            font-size: 62.5%;
+        }
+
+        html body {
+            width: 100%;
+            height: 100%;
+            background-color: #fe7777;
+        }
+
+        header {
+            width: 100%;
+            height: 1.79rem;
+            position: relative;
+            top: 0.8rem;
+        }
+
+        .headImg {
+            height: 1.52rem;
+            width: 1.98rem;
+            position: absolute;
+            top: 0.27rem;
+            left: 1.59rem;
+        }
+
+        .headCode {
+            width: 2.43rem;
+            height: 0.93rem;
+            position: absolute;
+            top: 0.37rem;
+            right: 1.61rem;
+        }
+
+        .headImg2 {
+            width: 2.43rem;
+            height: 0.93rem;
+        }
+
+        .QRcode {
+            position: absolute;
+            width: 0.87rem;
+            height: 0.87rem;
+            left: 0.28rem;
+            top: 0.03rem;
+        }
+
+        .BigQRcode {
+            width: 5.81rem;
+            height: 5.81rem;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
+            z-index: 1000;
+            display: none;
+        }
+
+        .content {
+            width: 7.26rem;
+            height: auto;
+            background-color: #faf2f2;
+            border: none;
+            border-radius: 0.1rem;
+            margin: 0.8rem auto;
+            padding: 0.4rem 0.3rem 1.7rem 0.4rem;
+            box-sizing: border-box;
+        }
+
+        .content h3 {
+            font-size: 0.26rem;
+            color: #222222;
+            font-family: "NotoSansHans-Medium", 微软雅黑, sans-serif;
+            line-height: 0.44rem;
+        }
+
+        .content p {
+            font-size: 0.24rem;
+            font-family: "NotoSansHans-Regular", 微软雅黑, sans-serif;
+            color: #4f4f4f;
+            line-height: 0.40rem;
+            margin: 0.2rem 0;
+        }
+
+        .content img {
+            width: 5.81rem;
+            height: 4.37rem;
+            display: block;
+            margin: 0.2rem auto;
+        }
+
+        .content .red {
+            color: #fe7777;
+        }
+
+        .pull-left {
+            text-align: left;
+        }
+
+        .pull-right {
+            text-align: right;
+        }
+
+        .text {
+            text-indent: 2em
+        }</style></head><body><header><img src="images/FAQ_headImg.png" alt="欢乐抓娃娃" class="headImg"><div class="headCode"><img src="images/FAQ_headImg2.png" alt="欢乐抓娃娃" class="headImg2"> <img src="images/FQA_QRcode.jpg" alt="二维码" class="QRcode"> <img src="images/FQA_QRcode.jpg" alt="二维码" class="BigQRcode"></div></header><div class="content"><br><p class="pull-left">亲爱的欢乐抓娃娃玩家：</p><div class="text"><p>您好，在提高了邀请奖励后，我们发现有玩家通过使用非法手段刷邀请码来获得游戏币，为了保证游戏的公正和其他玩家的权益，我们已对邀请记录存在异常的用户进行了封号处理；同时将可获得邀请奖励的人数上限调整为100人。</p><p>恶意刷取游戏币属于违法行为，账号不受官方和法律保护，由此产生的风险官方不承担相应责任。</p><p>如果您发现账号被误封，可以通过微信公众号或邮箱联系我们，联系时请详细描述您遇到的问题并同时提供您的ID或邀请码，我们在确认是误封后会为您解封并致以诚恳的歉意。</p><p>如果确认是通过非法手段获取娃娃币，我们将不予解封账号，并对已申请发货的娃娃将不予发货，同时不排除使用法律手段维护我们的权益。</p><p>微信公众号：欢乐抓娃娃</p><p>邮箱：service_wawa@rgbvr.com</p><p>对于在游戏房间内滥发各类虚假邀请码信息、诈骗信息的用户给予禁言处理，情节严重者将进行封号处理！</p><p>感谢您对欢乐抓娃娃的支持和理解，让我们一起维护欢乐和谐的娱乐环境！</p></div><br><p class="pull-right">欢乐抓娃娃团队</p></div><script src="js/rem.js"></script><script src="https://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script><script>+(function () {
+        var code = $('.QRcode');
+        var bigCode = $('.BigQRcode');
+        var status = false;
+        code.click(function () {
+            if (status == false) {
+                bigCode.show(500, function () {
+                    status = true;
+                });
+            }
+        })
+        document.documentElement.onclick = function () {
+            if (status == true) {
+                bigCode.hide(500, function () {
+                    status = false;
+                });
+            }
+        }
+    })();</script></body></html></html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html><html lang="zh"><head><meta charset="UTF-8"><meta name="viewport" content="user-scalable=0，width=device-width，height=device-height,initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="format-detection" content="email=no"><title>欢乐抓娃娃</title><style>*{
+            margin: 0;
+            padding: 0;
+        }
+        html{-webkit-text-size-adjust: 100%; font-size: 62.5%;}
+        html body{
+            width: 100%;
+            height: 100%;
+        }
+        body{
+            overflow: hidden;
+        }
+        #bg{
+            position: relative;
+            /*background: url("https://images.qn.rgbvr.com/resources/images/wawa.png") no-repeat 100% 100%;*/
+        }
+        #bg img{
+            height: 100%;
+            width: 100%;
+        }
+        #bg button{
+            width: 4.3rem;
+            height: 1.0rem;
+            position: absolute;
+            bottom: 1.2rem;
+            left: 0;
+            right: 0;
+            margin: auto;
+            font-size: 0.5rem;
+            /*border-radius: 0.6rem;*/
+            border: none;
+            background: url("https://images.qn.rgbvr.com/resources/images/wawa_shareBtn.png") no-repeat 100% 100%;
+            background-size: cover;
+            /*background-position: 0 -0.1rem;*/
+            outline: none;
+            -webkit-user-select: none;/*禁用手机浏览器的用户选择功能 */
+            -moz-user-select: none;
+        }
+        #bg button:active{
+            background: url("https://images.qn.rgbvr.com/resources/images/wawa_shareBtnActivity.png") no-repeat 100% 100%;
+            background-position: 0 -0.02rem;
+            background-size: cover;
+        }
+        #wxTip{
+            position: fixed;
+            left:0;
+            top:0;
+            background: rgba(0,0,0,0.8);
+            filter:alpha(opacity=80);
+            width: 100%;
+            height:100%;
+            z-index: 100;
+            display: none;
+        }
+        #wxTip p{
+            text-align: center;
+            margin: 2.2rem auto;
+            font-size: 0.5rem;
+            color: white;
+        }</style></head><body><div id="bg"><!--<img src="https://images.qn.rgbvr.com/resources/images/wawa_share_no_award_new.png" alt="欢乐抓娃娃" id="bgImg">--> <img src="images/wawa_download5.png" alt="欢乐抓娃娃" id="bgImg"> <button id="download"></button></div><div id="wxTip"><p>请选择在浏览器中打开</p></div><script src="https://apps.bdimg.com/libs/fastclick/1.0.0/fastclick.min.js"></script><script src="js/rem.js"></script><script>//判断浏览器类型
+    +(function () {
+        var wxTip = document.getElementById('wxTip');
+        var download = document.getElementById('download');
+
+        //分享点击事件
+        download.onclick = function () {
+            var userData = $.parseJSON(dsBridge.call("getUserData"));
+            var osName = userData.osName;//获得手机操作系统类型
+
+            if(osName == 'IOS'){
+                dsBridge.call("callPage", {page: "MyInvigationCodeCtrl"});
+            }else if(osName == 'Android'){
+                var version = userData.version;
+                if(version>="1.2.101"){
+                    dsBridge.call("callPage", {page: "com.rgbvr.wawa.activities.MyInvitationCodeActivity"});
+                }else {
+                    dsBridge.call("gotoMyInvitationCode");
+                }
+
+            }
+//            dsBridge.call("callPage", {page: "com.rgbvr.wawa.activities.MyInvitationCodeActivity"});
+//            dsBridge.callPage("gotoMyInvitationCode");
+        };
+
+
+        //使页面占满整屏幕
+        var bgImg = document.getElementById('bg');
+        var bgWidth = window.innerWidth;
+        var bgHeight = window.innerHeight;
+
+        bgImg.setAttribute('style','width:'+bgWidth+'px;height:'+bgHeight+'px');
+
+
+        if ('addEventListener' in document) {
+            document.addEventListener('DOMContentLoaded', function () {
+                FastClick.attach(document.body);
+            }, false);
+        }
+
+
+
+    }())</script></body></html>

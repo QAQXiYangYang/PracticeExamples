@@ -1,0 +1,210 @@
+<!DOCTYPE html><html lang="zh"><head><meta charset="UTF-8"><meta name="viewport" content="user-scalable=0，width=device-width，height=device-height,initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="format-detection" content="email=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><title>商品详情</title><style>*{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        html{-webkit-text-size-adjust: 100%; font-size: 62.5%;}
+        html body{
+            width: 100%;
+            height: 100%;
+            background-color: #eaeaea;
+        }
+        section{
+            width: 100%;
+            height: auto;
+            background-color: #ffffff;
+        }
+        .contentImg{
+            width: 7.14rem;
+            height: auto;
+            margin: 0 auto;
+        }
+        .contentImg img{
+            width: 100%;
+            height: 2.6rem;
+            margin-top: 0.18rem;
+        }
+        .contentWord{
+            width: 6.9rem;
+            height: auto;
+            margin: 0 auto;
+        }
+        .contentWord li{
+            width: 100%;
+            height: auto;
+            border-bottom: 1px solid #ecebea;
+            padding: 0.15rem 0 0.15rem;
+        }
+        .contentWord li h4{
+            color: #333333;
+            font-size: 0.26rem;
+            font-family: NotoSansHans-Medium, sans-serif;
+            line-height: 0.5rem;
+        }
+        .contentWord li p{
+            color: #797979 ;
+            font-size: 0.25rem;
+            font-family: NotoSansHans-Regular, sans-serif;
+            line-height: 0.5rem;
+        }
+        footer{
+            width: 100%;
+            height: 1.08rem ;
+            background-color: #ffffff;
+            position: fixed;
+            bottom: 0;
+            font-size: 0.33rem;
+        }
+        footer p{
+            color: #ff7c64;
+            line-height: 1.08rem;
+            padding-left: 0.34rem;
+            box-sizing: border-box;
+            display: inline-block;
+        }
+        footer button{
+            width: 3.06rem;
+            height: 100%;
+            border: none;
+            background-color: #ff7c64;
+            color: #ffffff;
+            float: right;
+            font-size: 0.33rem;
+        }
+
+        /*点击兑换按钮成功的弹框*/
+        .btnSuccess{
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            left:0;
+            top:0;
+            background: rgba(0,0,0,0.7);
+            filter:alpha(opacity=80);
+            z-index: 100;
+        }
+        .btnSuccess div{
+            width: 5.975rem;
+            height: 3.776rem;
+            border-radius: 0.2rem;
+            background-color: white;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
+            text-align: center;
+        }
+        .btnSuccess div h3{
+            font-size: 0.39rem ;
+            color: #020202;
+            font-family: NotoSansHans-Bold,sans-serif;
+            line-height: 0.55rem;
+            margin: 0.45rem 0;
+        }
+        .btnSuccess div p{
+            font-size: 0.29rem ;
+            color: #525253;
+            font-family: NotoSansHans-Regular,sans-serif;
+            line-height: 0.5rem;
+            padding: 0 0.6rem;
+        }
+        .btnSuccess span{
+            display: inline-block;
+            width: 5.347rem;
+            height: 0.014rem;
+            border-radius: 0.007rem;
+            background-color: rgba(71,55,49,0.1);
+            margin: 0.34rem auto 0;
+        }
+        .btnSuccess button{
+            width: 100%;
+            height: 0.85rem;
+            color: #ff7a65;
+            font-size: 0.34rem;
+            line-height: 0.85rem;
+            border: none;
+            background-color:transparent;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            border-radius: 0.2rem;
+            outline: none;
+        }</style></head><body><section><div class="contentImg"><img src="images/integralMallDetail_img1.png" alt="移动充值卡20"></div><div class="contentWord"><ul><li><h4>商品简介：</h4><p class="profile">中国移动全国通用充值卡，面值50元</p></li><li><h4>使用范围：</h4><p class="usage">全国通用</p></li><li><h4>温馨提示：</h4><p class="tips">此宝贝适用于湖北省内电信手机用户、不支持固话.宽带等其他电信产品充值，敬请知悉</p></li></ul></div></section><footer><p>单价：<span class="costScore">30</span>积分</p><button id="conversion">立即兑换</button></footer><div class="btnSuccess" style="display: none"><div><h3>兑换成功！</h3><p class="resultMessage">虚拟商品卡密将在1-3个工作日以消息的方式发送给您，请注意查看</p><!--<p>息的方式发送给您，请注意查看</p>--> <span></span> <button id="btnSuccessClose">知道了</button></div></div><script src="js/rem.js"></script><script src="https://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script><script>+(function () {
+        var conversionBtn = $('#conversion');
+        var btnSuccess = $('.btnSuccess');
+        var btnSuccessClose = $('#btnSuccessClose');
+        var serverPath = sessionStorage.getItem('serverPath');
+        var imagePath = sessionStorage.getItem('imagePath');
+        var uuid = sessionStorage.getItem('uuid');
+        var userId = sessionStorage.getItem('userId');
+        var costScore = 0;
+
+        /*根据地址栏获取商品id  productId*/
+        function GetQueryString(name)
+        {
+            var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if(r!=null)return  r[2];
+            return null;
+        }
+        var productId = GetQueryString('productId');
+
+        /*发送请求获取指定商品的详细信息*/
+        $.ajax({
+            type:'post',
+            url:serverPath+'market/product/info',
+            data:JSON.stringify({
+                "uuid":uuid,
+                "userId":userId,
+                "productId":productId
+            }),
+            contentType:"application/json",
+            success:function (res) {
+                res = res.data;
+                $('.contentImg img').attr('src',imagePath+res.pic) ;
+                $('.profile').html(res.profile);
+                $('.usage').html(res.usage);
+                $('.tips').html(res.tips);
+                $('.costScore').html(res.costScore);
+                costScore = res.costScore;
+            },
+            error:function (res) {
+                console.log(res);
+            }
+        });
+
+        /*立即兑换事件*/
+        conversionBtn.click(function () {
+            $.ajax({
+                type:'post',
+                url:serverPath+'market/product/exchange',
+                data:JSON.stringify({
+                    "uuid":uuid,
+                    "userId":userId,
+                    "productId":productId
+                }),
+                contentType:"application/json",
+                success:function (res) {
+                    res = res.data;
+                    if (res.result){
+                        $('.resultMessage').html(res.resultMessage);
+                        btnSuccess.css('display','block');
+                    }else {
+                        alert('兑换失败');
+                    }
+                },
+                error:function (res) {
+                    console.log(res);
+                }
+            });
+
+        });
+
+        /*兑换成功弹出框的关闭事件*/
+        btnSuccessClose.click(function () {
+            btnSuccess.css('display','none');
+        })
+
+    })();</script></body></html>

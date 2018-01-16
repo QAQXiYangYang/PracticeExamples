@@ -1,0 +1,130 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width" name="viewport"><meta content="telephone=no" name="format-detection"><title>五一三天乐，好礼拿不停！</title><style>*{
+        margin:0px;
+        padding:0px;
+    }
+    html, body {
+        height: 100%;
+        width: 100%;
+    }
+    .main{
+        position: relative;
+        width: 100%;
+        height: auto;
+    }
+    .laborDay{
+        width: 100%;
+        height: auto;
+        position: absolute;
+    }
+    .mainbody {
+        margin-top: 106%;
+        position: absolute;
+    }
+    .getGift{
+        width: 82%;
+        padding: 0 9%;
+        overflow: auto;
+        zoom: 1;
+    }
+    .day{
+        width: 26%;
+        float: left;
+    }
+    .day:nth-child(2){
+        margin: 0px 11%;
+    }
+    .gift{
+        width: 100%;
+    }
+    .dayGift{
+        width:100%;
+    }
+    .last{
+        width: 20%;
+        margin: 6% auto 1%;
+    }
+    .lastGift {
+        display: inline-block;
+        width: 100%;
+    }
+    #day4{
+        position: relative;
+        display: inline-block;
+    }
+    p {
+        text-align: center;
+        font-size: 12px;
+    }</style></head><body><div class="main"><img class="laborDay" src="images/laborDay.jpg" alt="laborDay"><div class="mainbody"><div class="getGift"><div class="day1 day"><img class="gift" src="images/day1.png" alt="day1"> <a href="javascript:void(0);" id="day1"><img class="dayGift" src="images/overdue.png" alt="day1Button"></a></div><div class="day2 day"><img class="gift" src="images/day2.png" alt="day2"> <a href="javascript:void(0);" id="day2"><img class="dayGift" src="images/overdue.png" alt="day2Button"></a></div><div class="day3 day"><img class="gift" src="images/day3.png" alt="day3"> <a href="javascript:void(0);" id="day3"><img class="dayGift" src="images/overdue.png" alt="day3Button"></a></div></div><div class="last day3"><img class="lastGift" src="images/last.png" alt="lastGift"> <a href="javascript:void(0);" id="day4"><img id="giftDay3" class="dayGift" src="images/overdue.png" alt="lastButton"></a></div><p>*三个礼物都领取后即可领取，同一设备，同一IP只能领取一次</p></div></div><script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script><script src="js/common.js"></script><script>var activityId;
+    var aa;
+    giftStatus();
+    function giftStatus(){
+        var data = {
+            "userId": request('userId'),
+            "uuid": request('uuid'),
+        }
+        $.ajax({
+            type:"post",
+            url:URLPost + "gift/activity/reward/51/list",
+            contentType: "application/json",
+            data :JSON.stringify(data),
+            success:function(data){
+                if(data.status == "OK"){
+                    for(var i=0;i<data.data.length;i++){
+                        var statusStr=data.data[i].status;
+                        if(statusStr == 1){
+                            $("#day" + (i + 1)).children().attr("src","images/overdue.png");
+                        }else if(statusStr == 2){
+                             if(i!=3){
+                                 $("#day" + (i + 1)).children().attr("src","images/dayButton.png");
+                             }else{
+                                 $("#day" + (i + 1)).children().attr("src","images/lastButton.png");
+                             }
+                        } else if(statusStr == 3){
+                            $("#day" + (i + 1)).children().attr("src","images/get.png");
+                        }
+                    }
+                }
+            }
+        })
+    }
+   /* */
+    function request(paras){
+        var url = window.location.href;
+        var paraString=url.substring(url.indexOf("?")+1,url.length).split("&");
+        var paraObj={}
+        for(var i=0;i<paraString.length;i++){
+            var j=paraString[i];
+            paraObj[j.substring(0,j.indexOf("=")).toLowerCase()]=j.substring(j.indexOf("=")+1,j.length);
+        }
+        var returnValue=paraObj[paras.toLowerCase()];
+        if(typeof(returnValue)=="undefined"){
+            return "";
+        }
+        else{
+            return returnValue;
+        }
+    }
+    $("[id^='day']").click(function(){
+        aa = $(this).children("img");
+        activityId = $(this).attr('id').split('day')[1];
+        var data = {
+            "userId": request('userId'),
+            "uuid": request('uuid'),
+            "activityId": activityId,
+            "deviceId": request('deviceId'),
+            "versionCode": request('versionCode'),
+            "channel": request('channel'),
+            "version": request('version')
+        }
+        $.ajax({
+            type:"post",
+            url:URLPost + "gift/activity/reward/51/get",
+            contentType: "application/json",
+            data :JSON.stringify(data),
+            success:function(data){
+                if(data.status == "OK"){
+                    giftStatus();
+                }
+            }
+        })
+    });</script></body></html>

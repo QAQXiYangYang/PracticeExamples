@@ -1,0 +1,21 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width" name="viewport"><meta content="telephone=no" name="format-detection"><title>送礼物，推龙舟！</title><link href="css/duanWu.css" rel="stylesheet" type="text/css"></head><body><div class="main"><img class="duanWuPic" src="images/bg.jpg" alt="dragonBoatFestival"> <img class="tips" src="images/tips.png" alt="tips"><div id="list"><img class="tank_title" src="images/tank_title.png" alt="tank_title"><ul id="mian_list"><p class="title"><span class="rank_num">排名</span><span class="nick">昵称</span><span class="distance">行驶距离</span></p></ul></div><img class="leaves" src="images/leaves.png" alt="leaves"></div></body><script src="//cdn.bootcss.com/jquery/3.1.1/jquery.js"></script><script src="js/common.js"></script><script>duanWu();
+    function duanWu(){
+        var data = {
+        }
+        $.ajax({
+            type:"post",
+            url:URLPost + "duanwu/rank",
+            contentType: "application/json",
+            data :JSON.stringify(data),
+            success:function(data){
+                if(data.status == "OK"){
+                    for(var i=0;i<data.data.length;i++){
+                        var iData = data.data;
+                        console.log("666666666666666",iData);
+                        $("#mian_list").append('<li id="rank-' + iData[i].rank + '"><i class="pic-' + iData[i].rank + '"></i><i class="list-' + iData[i].rank + ' list">' + iData[i].rank + '</i><img id="pic-' + iData[i].rank + '" class="avatar" src="' + URLFile + iData[i].avatar + '" alt="pic"><span class="nickName">' + iData[i].nickName + '</span><span class="course">' + iData[i].course + 'm</span><img class="icon" src="images/icon.png" alt="icon"></li>')
+
+                    }
+                }
+            }
+        })
+    }</script></html>

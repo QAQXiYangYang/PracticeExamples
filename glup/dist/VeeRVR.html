@@ -1,0 +1,126 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width" name="viewport"><meta content="telephone=no" name="format-detection"><title>小花秀VR直播| 进入你与她的私密空间</title><style type="text/css">*{
+			margin:0px;
+			padding:0px;
+		}
+		html, body {
+			height: 100%;
+			width: 100%;
+		}
+		.main{
+			width: 100%;
+			height:100%;
+		}
+		.appLead{
+			position: absolute;
+			width: 100%;
+		}
+		.download{
+			position: relative;
+			width: 38%;
+			display: inline-block;
+			margin: 109% 31% 0;
+		}
+		.download img{
+			width: 100%;
+		}
+		#weixin {
+			position: relative;
+			width: 100%;
+			height: 100%;
+		}
+		img.weixin {
+			width: 100%;
+		}
+		.bg-img img{
+			width: 100%;
+		}</style><script>var _hmt = _hmt || [];
+		(function() {
+			var hm = document.createElement("script");
+			hm.src = "https://hm.baidu.com/hm.js?c59843e96c85bd644536c75a53601784";
+			var s = document.getElementsByTagName("script")[0];
+			s.parentNode.insertBefore(hm, s);
+		})();</script></head><body><div class="main"><img src="images/appDownLoad.jpg" alt="appLead" class="appLead"> <a class="download" href="javascript:void(0);" target="_blank" id="download"><img src="images/loadButton.png" alt="leadButton"></a></div><div id="weixin" style="display: none"><img src="images/lead.jpg" alt="weixin" class="weixin"></div><script src="http://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script><script src="js/common.js"></script><script type="text/javascript">function getQueryString(name) {
+	    var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+	    var r = window.location.search.substr(1).match(reg);
+		if (r != null) {
+	 		return unescape(r[2]);
+	    }
+	 	return null;
+	 }
+	if(isWeixin()){
+		 $("#weixin").css('display','block');
+		 $(".main").css('display','none');
+	}else{
+		 $("#weixin").css('display','none');
+		 $(".main").css('display','block');
+	}
+	function isWeixin(){
+		 var WxObj=window.navigator.userAgent.toLowerCase();
+		 if(WxObj.match(/microMessenger/i)=='micromessenger'){
+		 	 return true;
+		 }else{
+		 	 return false;
+		 }
+	}
+	function appLink(){
+		var browser = {
+		 versions: function () {
+			 var u = navigator.userAgent, app = navigator.appVersion;
+			 return {//移动终端浏览器版本信息
+				 trident: u.indexOf('Trident') > -1, //IE内核
+				 presto: u.indexOf('Presto') > -1, //opera内核
+				 webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+				 gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+				 mobile: !!u.match(/AppleWebKit.*Mobile.*!/) || !!u.match(/AppleWebKit/), //是否为移动终端
+				 ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+				 android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+				 iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者QQHD浏览器
+				 iPad: u.indexOf('iPad') > -1, //是否iPad
+				 mobileQQ: !!u.match("MQQBrowser")>-1,//是否为QQ
+				 webApp: u.indexOf('Safari') == -1 //是否web应该程序，没有头部与底部
+		 	};
+	 	 }(),
+	 	 language: (navigator.browserLanguage || navigator.language).toLowerCase()
+		}
+	    if (browser.versions.ios || browser.versions.iPhone || browser.versions.iPad) {
+			window.location ='rgbvrshow://';
+	    }else if (browser.versions.android) {
+			var t = Date.now();
+			var ifr = document.createElement('iframe');
+	 	    ifr.src = 'app://rgbvrshow';
+	 	    ifr.style.display = 'none';
+			document.body.appendChild(ifr);
+		}
+		var start = Date.now(),
+			loadTimer = null,
+			that  = this;
+		loadTimer = setTimeout(function() {
+			if (document.hidden || document.webkitHidden) {
+				return;
+			}
+			// 如果app启动，浏览器最小化进入后台，则计时器存在推迟或者变慢的问题
+			// 那么代码执行到此处时，时间间隔必然大于设置的定时时间
+			if (Date.now() - start > 2400) {
+				// come back from app
+				// 如果浏览器未因为app启动进入后台，则定时器会准时执行，故应该跳转到下载页
+			} else {
+				if (browser.versions.ios || browser.versions.iPhone || browser.versions.iPad) {
+					window.location = "https://itunes.apple.com/us/app/xiao-hua-xiuvr-zhi-bo/id1152189915?mt=8";
+				}else if (browser.versions.android) {
+					window.location = URLPost + "xhx/version/download?channel=VeeRVR";
+				}
+			}
+		}, 2000);
+		var visibilitychange = function() {
+			var tag = document.hidden || document.webkitHidden;
+			tag && clearTimeout(loadTimer);
+		};
+		document.addEventListener('visibilitychange', visibilitychange, false);
+		document.addEventListener('webkitvisibilitychange', visibilitychange, false);
+		window.addEventListener('pagehide', function() {
+			clearTimeout(loadTimer);
+		}, false);
+	}
+	$("#download").click(function(){
+		appLink();
+	});</script></body></html>

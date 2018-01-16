@@ -1,0 +1,554 @@
+<!--采用百分比适配--><!DOCTYPE html><html lang="zh"><head><meta charset="UTF-8"><meta name="viewport" content="user-scalable=0，width=device-width，height=device-height,initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="format-detection" content="email=no"><meta property="og:type" content="website"><meta property="og:title" content="欢乐抓娃娃"><!--<meta property="og:description" content="免费手机抓娃娃，全国包邮，输入我的邀请码%s，登录就送娃娃币！">--><meta property="og:image" content="https://images.qn.rgbvr.com/misc/1502894024145image_20170816223344"><meta itemprop="name" content="欢乐抓娃娃"><title>欢乐抓娃娃</title><script>; (function (win, lib) {
+
+            var doc = win.document;
+
+            var docEl = doc.documentElement;
+
+            var metaEl = doc.querySelector('meta[name="viewport"]');
+
+            var flexibleEl = doc.querySelector('meta[name="flexible"]');
+
+            var dpr = 0;
+
+            var scale = 0;
+
+            var tid;
+
+            var flexible = lib.flexible || (lib.flexible = {});
+
+
+
+            if (metaEl) {
+
+                console.warn('将根据已有的meta标签来设置缩放比例');
+
+                var match = metaEl.getAttribute('content').match(/initial\-scale=([\d\.]+)/);
+
+                if (match) {
+
+                    scale = parseFloat(match[1]);
+
+                    dpr = parseInt(1 / scale);
+
+                }
+
+            } else if (flexibleEl) {
+
+                var content = flexibleEl.getAttribute('content');
+
+                if (content) {
+
+                    var initialDpr = content.match(/initial\-dpr=([\d\.]+)/);
+
+                    var maximumDpr = content.match(/maximum\-dpr=([\d\.]+)/);
+
+                    if (initialDpr) {
+
+                        dpr = parseFloat(initialDpr[1]);
+
+                        scale = parseFloat((1 / dpr).toFixed(2));
+
+                    }
+
+                    if (maximumDpr) {
+
+                        dpr = parseFloat(maximumDpr[1]);
+
+                        scale = parseFloat((1 / dpr).toFixed(2));
+
+                    }
+
+                }
+
+            }
+
+
+
+            if (!dpr && !scale) {
+
+                var isAndroid = win.navigator.appVersion.match(/android/gi);
+
+                var isIPhone = win.navigator.appVersion.match(/iphone/gi);
+
+                var devicePixelRatio = win.devicePixelRatio;
+
+                if (isIPhone) {
+
+                    // iOS下，对于2倍和3倍的屏幕，用2倍的方案，其余的用1倍方案
+
+                    if (devicePixelRatio >= 3 && (!dpr || dpr >= 3)) {
+
+                        dpr = 3;
+
+                    } else if (devicePixelRatio >= 2 && (!dpr || dpr >= 2)) {
+
+                        dpr = 2;
+
+                    } else {
+
+                        dpr = 1;
+
+                    }
+
+                } else {
+
+                    //其它设备下，仍使用1倍的方案
+
+                    dpr = 1;
+
+                }
+
+                scale = 1 / dpr;
+
+            }
+
+
+
+            docEl.setAttribute('data-dpr', dpr);
+
+            if (!metaEl) {
+
+                metaEl = doc.createElement('meta');
+
+                metaEl.setAttribute('name', 'viewport');
+
+                metaEl.setAttribute('content', 'initial-scale=' + scale + ', maximum-scale=' + scale + ', minimum-scale=' + scale + ', user-scalable=0');
+
+                if (docEl.firstElementChild) {
+
+                    docEl.firstElementChild.appendChild(metaEl);
+
+                } else {
+
+                    var wrap = doc.createElement('div');
+
+                    wrap.appendChild(metaEl);
+
+                    doc.write(wrap.innerHTML);
+
+                }
+
+            }
+
+
+
+            function refreshRem() {
+
+                var width = docEl.getBoundingClientRect().width;
+
+                /*if (width / dpr > 540) {
+
+                 width = 540 * dpr;
+
+                 }*/
+
+                //淘宝方式1rem代表设计稿的十分之一
+                // var rem = width / 10;
+
+                // // 另一种方式，1rem改成设计稿上的100px，设计稿为750
+                var designWidth = 750;
+                var rem = width / designWidth * 100;
+
+                docEl.style.fontSize = rem + 'px';
+
+                flexible.rem = win.rem = rem;
+
+            }
+
+
+
+            win.addEventListener('resize', function () {
+
+                clearTimeout(tid);
+
+                tid = setTimeout(refreshRem, 300);
+
+            }, false);
+
+            win.addEventListener('pageshow', function (e) {
+
+                if (e.persisted) {
+
+                    clearTimeout(tid);
+
+                    tid = setTimeout(refreshRem, 300);
+
+                }
+
+            }, false);
+
+
+
+            if (doc.readyState === 'complete') {
+
+                doc.body.style.fontSize = 12 * dpr + 'px';
+
+            } else {
+
+                doc.addEventListener('DOMContentLoaded', function (e) {
+
+                    doc.body.style.fontSize = 12 * dpr + 'px';
+
+                }, false);
+
+            }
+
+
+
+
+
+            refreshRem();
+
+
+
+            flexible.dpr = win.dpr = dpr;
+
+            flexible.refreshRem = refreshRem;
+
+            flexible.rem2px = function (d) {
+
+                var val = parseFloat(d) * this.rem;
+
+                if (typeof d === 'string' && d.match(/rem$/)) {
+
+                    val += 'px';
+
+                }
+
+                return val;
+
+            }
+
+            flexible.px2rem = function (d) {
+
+                var val = parseFloat(d) / this.rem;
+
+                if (typeof d === 'string' && d.match(/px$/)) {
+
+                    val += 'rem';
+
+                }
+
+                return val;
+
+            }
+
+
+
+        })(window, window['lib'] || (window['lib'] = {}));</script><style>*{
+            margin: 0;
+            padding: 0;
+        }
+        html{-webkit-text-size-adjust: 100%; font-size: 62.5%;}
+        html{
+            width: 100%;
+            height: 100%;
+        }
+        body{
+            height: 100%;
+            background-color: #fef7f3;
+            position: relative;
+        }
+        #bg{
+            width: 100%;
+            height: 100%;
+        }
+        /*#bg>img{
+            height: 42%;
+            width: 100%;
+        }*/
+        #bgHead{
+            width: 100%;
+            margin-top: 0;
+            font-size: 0.34rem;
+            font-weight: 700;
+            text-align: center;
+            color: #F85F6C;
+            font-family: NotoSansHans-Bold,微软雅黑,sans-serif;
+        }
+        #bgHead>img{
+            width: 0.73rem;
+            height: 0.41rem;
+            vertical-align: middle;
+        }
+        .icon{
+            width: 100%;
+            font-family: NotoSansHans-Regular,微软雅黑,sans-serif;
+            font-size: 0.26rem;
+            color: #292929;
+            text-align: left;
+            padding-left: 0.53rem;
+            box-sizing: border-box;
+            line-height: 0.64rem;
+        }
+        .icon>img{
+            width: 0.64rem;
+            height: 0.64rem;
+            vertical-align: middle;
+        }
+        #icon1{
+            margin-top: 0.2rem;
+        }
+        #icon2{
+            margin-top: 0.2rem;
+        }
+        #icon4{
+            margin-top: 0.2rem;
+        }
+        #bg .inviteCode{
+            display: block;
+            width: 3rem;
+            height: 0.4rem;
+            margin: 0.2rem auto 0;
+            left: 0;
+            right: 0;
+            font-size: 0.2rem;
+            text-align: center;
+            background-color: #e4deda;
+            line-height: 0.4rem;
+            border-radius: 0.6rem;
+        }
+        #bg button{
+            display: block;
+            width: 4.3rem;
+            height: 1.0rem;
+            /*margin: 0.2rem auto 0;*/
+            font-size: 0.5rem;
+            /*border-radius: 0.6rem;*/
+            border: none;
+            /*background: url("../activity/images/download.png") no-repeat;*/
+            background: url("https://images.qn.rgbvr.com/resources/images/download.png") no-repeat;
+            background-size: cover;
+            /*background-position: 0rem 0rem;*/
+            outline: none;
+            -webkit-user-select: none;/*禁用手机浏览器的用户选择功能 */
+            -moz-user-select: none;
+        }
+        #bg button:active{
+            background: url("../activity/images/downloadActive.png") no-repeat 100% 100%;
+            /*background: url("../activity/images/downloadActive.png") no-repeat 100% 100%;*/
+            background-position: 0 0.01rem;
+            background-size: cover;
+        }
+        #footerInfo{
+            width: 100%;
+            /*position: fixed;
+            bottom: 0.2rem;*/
+            font-size: 0.24rem;
+            color: #292929;
+            font-family:NotoSansHans-Medium,微软雅黑,sans-serif;
+            text-align: center;
+            font-weight: bold;
+        }
+        #wxTip{
+            position: fixed;
+            left:0;
+            top:0;
+            background: rgba(0,0,0,0.8);
+            filter:alpha(opacity=80);
+            width: 100%;
+            height:100%;
+            z-index: 100;
+            display: none;
+        }
+        #wxTip p{
+            text-align: center;
+            margin: 2.2rem auto;
+            font-size: 0.5rem;
+            color: white;
+        }
+        #wxTip img{
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+        }
+        #wxImg{
+            display: none;
+        }
+
+        /*竖屏时样式*/
+        @media all and (orientation:portrait){
+            body{
+                width: 100%;
+            }
+            #bg>img{
+                height: 42%;
+                width: 100%;
+            }
+            #bg button{
+                margin: 0.2rem auto 0.6rem;
+            }
+            #footerInfo{
+                position: fixed;
+                bottom: 0.2rem;
+            }
+        }
+        /*横屏时样式*/
+        @media all and (orientation:landscape){
+            body{
+                width: 80%;
+                margin: 0 auto;
+            }
+            #bg>img{
+                height: 100%;
+                width: 100%;
+            }
+            #bg button{
+                margin: 0.2rem auto 0;
+            }
+            #footerInfo{
+                margin: 0.2rem auto;
+            }
+        }</style></head><body><div id="wxImg"><img src="images/wawaIcon.png" alt=""></div><div id="bg"><img src="images/wawaDownload_bg2.png" alt="欢乐抓娃娃" id="bgImg"><div id="bgHead"><img src="images/wawaDownload_headImg.png"> 娃娃币疯狂送，全国包邮 <img src="images/wawaDownload_headImg.png"></div><div id="icon1" class="icon"><img src="images/wawaDownload_icon1.png" alt="icon1"> 爆款网红娃娃，嗨抓不停</div><div id="icon2" class="icon"><img src="images/wawaDownload_icon2.png" alt="icon1"> 每天登录就送10娃娃币</div><div id="icon4" class="icon"><img src="images/wawaDownload_icon4.png" alt="icon1"> 抓娃娃就能获得积分，积分可兑换娃娃币</div><div class="inviteCode">我的邀请码：<span id="code">212122</span></div><button id="download"></button><div id="footerInfo">更多信息，请关注微信公众号：欢乐抓娃娃</div></div><div id="wxTip"><p>请选择在浏览器中打开</p><img src="images/wxTip.png"></div><script src="https://apps.bdimg.com/libs/fastclick/1.0.0/fastclick.min.js"></script><script src="https://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script><script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script><script>+(function () {
+
+        //微信ID
+        var wxID = 'wxb392bbab97dca39f',
+            wxTip = document.getElementById('wxTip'),
+            download = document.getElementById('download'),
+            phoneType = '',
+            u = navigator.userAgent;//获取浏览器信息
+        if(is_weixin()){
+//            phoneType = 'wx';
+            if (u.indexOf('Android') > -1||u.indexOf('Linux') > -1){
+                phoneType = 'wx';
+            }else if(u.indexOf('iPhone')){
+                phoneType = 'wx'
+            }
+        }else if (u.indexOf('Android') > -1) {//安卓手机
+            phoneType = 'android';
+        } else if(u.indexOf('Linux') > -1){//安卓手机
+            phoneType = 'android';
+        }else if(u.indexOf('iPhone') > -1){//苹果手机
+            phoneType = 'iphone'
+        }
+
+//是否在微信内打开
+        function is_weixin() {
+            var ua = u.toLowerCase();
+            if (ua.match(/MicroMessenger/i) == "micromessenger") {
+                return true;
+            }else {
+                return false;
+            }
+        }
+
+        //下载点击事件
+        download.onclick = function () {
+            if(phoneType=='wx'){
+                wxTip.setAttribute('style','display:block');
+            }else if(phoneType == 'android'){
+                window.location.href = 'https://service.wawa.rgbvr.com/wawaServer/rest/version/download?channel=h5wawa';
+            }else if(phoneType == 'iphone'){
+                alert(" Android版本已上线，iOS版本敬请期待！");
+                //window.location.href = 'https://itunes.apple.com/us/app/%E6%AC%A2%E4%B9%90%E6%8A%93%E5%A8%83%E5%A8%83/id1258080559?ls=1&mt=8';
+            }
+        };
+
+        //触摸屏幕取消模态框
+        wxTip.onclick = function () {
+            wxTip.setAttribute('style','display:none');
+        };
+
+        //使页面占满整屏幕
+        /*var bgImg = document.getElementById('bg');
+         var bgWidth = window.innerWidth;
+         var bgHeight = window.innerHeight;*/
+        var code = document.getElementById('code'),
+            inviteCode = document.getElementsByClassName('inviteCode')[0];
+
+       /* bgImg.setAttribute('style','width:'+bgWidth+'px;height:'+bgHeight+'px');*/
+
+
+        if ('addEventListener' in document) {
+            document.addEventListener('DOMContentLoaded', function () {
+                FastClick.attach(document.body);
+            }, false);
+        }
+
+        //获取地址栏邀请码
+        function GetQueryString(name)
+        {
+            var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if(r!=null)return  r[2];
+            inviteCode.setAttribute('style','display:none');
+            return null;
+        }
+        code.innerHTML = GetQueryString('code');
+
+
+        //实现微信内分享自定义图标和内容
+        if (is_weixin()){
+            $.ajax({
+                type:'post',
+                url:'https://test.wawa.rgbvr.com/wawaServer/rest/misc/weixin/js/config',
+                data:JSON.stringify({
+                    'wxAppId':wxID,
+                    'url':location.href
+                }),
+                contentType:"application/json",
+                success:function (result) {
+                    wx.config({
+                        debug: false,
+                        appId: wxID,
+                        timestamp: result.data.timestamp,
+                        nonceStr: result.data.nonceStr,
+                        signature: result.data.signature,
+//                timestamp: "1502980698",
+//                nonceStr: "87d52963-01da-4102-8a23-555e2e132c73",
+//                signature: "36912a5d32d52c8954ad5f212ecddf3a3171408a",
+                        jsApiList: [
+                            'checkJsApi',//判断当前客户端版本是否支持指定JS接口
+                            'onMenuShareTimeline',
+                            'onMenuShareAppMessage'] // 功能列表，我们要使用JS-SDK的什么功能
+                    });
+
+                    wx.ready(function(){
+                        // 获取“分享到朋友圈”按钮点击状态及自定义分享内容接口
+                        wx.onMenuShareTimeline({
+                            title: "欢乐抓娃娃 - 免费手机抓娃娃，全国包邮，输入我的邀请码"+(GetQueryString('code')||'831127')+"，登录就送娃娃币！", // 分享标题
+                            link: location.href,
+                            imgUrl: "https://images.qn.rgbvr.com/misc/1502894024145image_20170816223344" // 分享图标
+
+                        });
+                        // 获取“分享给朋友”按钮点击状态及自定义分享内容接口
+                        wx.onMenuShareAppMessage({
+                            title: '欢乐抓娃娃', // 分享标题
+                            desc: "免费手机抓娃娃，全国包邮，输入我的邀请码"+(GetQueryString('code')||'831127')+"，登录就送娃娃币！", // 分享描述
+                            link: location.href,
+                            imgUrl: "https://images.qn.rgbvr.com/misc/1502894024145image_20170816223344", // 分享图标
+                            type: 'link', // 分享类型,music、video或link，不填默认为link
+                            success: function (res) {
+//                                alert('success');
+                            },
+                            cancel: function (res) {
+//                                alert('已取消');
+                            },
+                            fail: function (res) {
+//                                alert(res.errMsg);
+                            }
+
+                        });
+
+                    });
+                    //        wx.error(function (res) {
+                    //            alert('微信获取失败'+res)
+                    //        })
+// config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，
+// 所以如果需要在 页面加载时就调用相关接口，则须把相关接口放在ready函数中调用来确保正确执行。
+// 对于用户触发时才调用的接口，则可以直接调用，不需要放在ready 函数中。
+                },
+                /*error:function (res) {
+                 alert('请求失败'+res)
+                 }*/
+
+            })
+        }
+
+        //手动给页面添加<meta property="og:description" content="免费手机抓娃娃，全国包邮，输入我的邀请码%s，登录就送娃娃币！">
+        var meta = '<meta property="og:description" content="免费手机抓娃娃，全国包邮，输入我的邀请码'+(GetQueryString('code')||'831127')+'，登录就送娃娃币！">';
+        var meta1 = '<meta name="description" itemprop="description" content="免费手机抓娃娃，全国包邮，输入我的邀请码'+(GetQueryString('code')||'831127')+'，登录就送娃娃币！">';
+        $('head').prepend(meta);
+        $('head').prepend(meta1);
+
+    }())</script></body></html>
