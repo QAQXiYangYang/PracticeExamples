@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+            #canvas {
+        
+              border: 1px black solid;
+            }
+          </style>
+</head>
+<body>
+
+
+        <canvas id="canvas" width="500" height="300"></canvas>
+    <script>
+
+    // var imagePath = function (path) {
+    //     var img = new Image()
+    //     img.src = path
+    //     return img
+    //     }
+    //  console.log(imagePath("./walk01.png"));
+
+    //    setInterval(function () {
+    //     context.drawImage(imagePath("./walk01.png"), 10, 10)
+    //   }, 1000 / 30)
+
+    var GuaGame = function () {
+      var g = {}
+      var canvas = document.getElementById("canvas")
+      var context = canvas.getContext('2d')
+      g.canvas = canvas
+      g.context = context
+    
+     //g.update()
+     g.draw()
+    return g
+    }
+   
+    var Paddle = function () {
+      var o = {
+        x: 100,
+        y: 200,
+        speed: 5,
+      }
+      var paddle = o
+      o.moveLeft = function () {
+        paddle.x -= paddle.speed
+      }
+      o.moveRight = function () {
+        paddle.x += paddle.speed
+      }
+      return o
+    }
+    var __main = function () {
+      var game = GuaGame()
+      var paddle = Paddle()
+      var leftDown = false
+      var rightDown = false
+      window.addEventListener("keydown", function (event) {
+        var k = event.key
+        if (k == "ArrowLeft") {
+          leftDown = true
+        } else if (k == "ArrowRight") {
+          rightDown = true
+        }
+      })
+
+      window.addEventListener("keyup", function (event) {
+        var k = event.key
+        if (k == "ArrowLeft") {
+          leftDown = false
+          
+        } else if (k == "ArrowRight") {
+          rightDown = false
+        }
+      })
+      game.update = function () {
+        //updata x
+        if (leftDown) {
+          paddle.moveLeft()
+          console.log(1);
+          
+
+        } else if (rightDown) {
+          paddle.moveRight()
+
+        }
+      }
+      //game.draw = function () {
+       // game.context.drawImage(paddle.image, paddle.x, paddle.y, 180, 25)
+
+      // game.draw('walk0',paddle.x,paddle.y)
+     // }
+     console.log(paddle.x);
+     
+     game.draw= function(src,n,startX,startY){
+        var i=0
+         function loopImg(){
+            setTimeout(function(){
+                i++
+            var img = new Image()
+            img.src = src+i+".png"
+            console.log(img);
+               setInterval(function () {
+                    game.context.clearRect(0, 0, canvas.width, canvas.height);
+                    game.context.drawImage(img, startX, startY)
+                }, 1000 )
+                i<n&&loopImg();
+            },1000)
+        }
+         loopImg()
+    }
+    }
+    __main()
+
+
+    </script>
+</body>
+</html>

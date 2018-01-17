@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
+    <script src="./creat.js" charset="utf-8"></script>
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="myCanvas" width="1000" height="600"></canvas>
+
+    <button class="gobtn">GO</button>
+    <button class="stopbtn">Stop</button>
+
+</body>
+<script>
+   
+       
+    var characterImage = ['walk01.png','walk02.png','walk03.png','walk04.png','walk05.png','walk06.png','walk01.png']
+    var canvas = document.getElementById("myCanvas"),
+    stage = new createjs.Stage(canvas);
+    function setup() {
+        var spritesheet = new createjs.SpriteSheet({
+                "images": characterImage, 
+                "frames": {"height": 64, "count": 10, "width": 54},
+                "animations": { run: [0,6]}
+            });  
+        var character = new createjs.Sprite(spritesheet, "run");
+        character.framerate = 10; 
+        character.play();//播放动画
+        stage.addChild(character);
+        createjs.Ticker.addEventListener("tick", tick);
+    }
+  function tick(event) {
+      stage.update();
+  }
+  setup();
+ 
+  </script>
+
+</html>
